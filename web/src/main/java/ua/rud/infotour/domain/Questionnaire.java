@@ -17,12 +17,12 @@ public class Questionnaire implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "agent_id", nullable = false)
-    private Agent agent;
+    private Person agent;
 
     @Column(name = "notes")
     private String notes;
 
-    public static List<Questionnaire> create(List<Agent> agents) {
+    public static List<Questionnaire> create(List<Person> agents) {
         return agents.stream()
                 .map(Questionnaire::new)
                 .collect(Collectors.toList());
@@ -31,7 +31,7 @@ public class Questionnaire implements Serializable {
     protected Questionnaire() {
     }
 
-    private Questionnaire(Agent agent) {
+    private Questionnaire(Person agent) {
         this.agent = agent;
     }
 
@@ -43,11 +43,11 @@ public class Questionnaire implements Serializable {
         this.id = id;
     }
 
-    public Agent getAgent() {
+    public Person getAgent() {
         return agent;
     }
 
-    public void setAgent(Agent agent) {
+    public void setAgent(Person agent) {
         this.agent = agent;
     }
 

@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS
-agent,
+person,
 hotel,
 
 tour,

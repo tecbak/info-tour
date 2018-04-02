@@ -6,6 +6,8 @@ import ua.rud.infotour.domain.Hotel;
 import ua.rud.infotour.repository.HotelRepository;
 import ua.rud.infotour.service.HotelService;
 
+import java.util.UUID;
+
 @Service
 public class HotelServiceImpl implements HotelService {
     private HotelRepository hotelRepository;
@@ -23,7 +25,7 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public Hotel getById(Long id) {
+    public Hotel getById(UUID id) {
         return hotelRepository.getById(id);
     }
 }

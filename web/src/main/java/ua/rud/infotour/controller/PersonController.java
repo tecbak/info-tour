@@ -7,22 +7,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import ua.rud.infotour.domain.Agent;
-import ua.rud.infotour.service.AgentService;
+import ua.rud.infotour.domain.Person;
+import ua.rud.infotour.service.PersonService;
 
 @RestController
-@RequestMapping("agent/")
-public class AgentController {
-    private AgentService agentService;
+@RequestMapping("person")
+public class PersonController {
+    private PersonService personService;
 
     @Autowired
-    public AgentController(AgentService agentService) {
-        this.agentService = agentService;
+    public PersonController(PersonService personService) {
+        this.personService = personService;
     }
 
     @RequestMapping(value = "add/{name}", method = RequestMethod.POST)
-    public ResponseEntity<Agent> addNewAgent(@PathVariable("name") String name) {
-        Agent agent = agentService.addAgent(name);
-        return new ResponseEntity<>(agent, HttpStatus.OK);
+    public ResponseEntity<Person> addPerson(@PathVariable("name") String name) {
+        Person person = personService.addPerson(name);
+        return new ResponseEntity<>(person, HttpStatus.OK);
     }
 }

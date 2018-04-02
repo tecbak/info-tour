@@ -3,6 +3,7 @@ package ua.rud.infotour.domain.schedule;
 import javax.persistence.*;
 
 @Entity
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "hotel_revision")
 public class HotelRevision extends Schedule {
 //    @Id

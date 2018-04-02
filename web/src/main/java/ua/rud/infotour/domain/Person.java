@@ -1,28 +1,33 @@
 package ua.rud.infotour.domain;
 
-import org.hibernate.annotations.Polymorphism;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.UUID;
 
 @Entity
-@Polymorphism
-@Table(name = "agent")
-public class Agent implements Serializable {
+//@Polymorphism
+@Table(name = "person")
+public class Person implements Serializable {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
     @Column(name = "id")
-    private Long id;
+    private UUID id;
 
     @Column(name = "name")
     private String name;
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -39,9 +44,9 @@ public class Agent implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Agent agent = (Agent) o;
+        Person person = (Person) o;
 
-        return name != null ? name.equals(agent.name) : agent.name == null;
+        return name != null ? name.equals(person.name) : person.name == null;
     }
 
     @Override

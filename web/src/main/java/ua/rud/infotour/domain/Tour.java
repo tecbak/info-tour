@@ -1,35 +1,51 @@
 package ua.rud.infotour.domain;
 
-import ua.rud.infotour.domain.schedule.Schedule;
+import org.hibernate.annotations.GenericGenerator;
+import ua.rud.infotour.domain.schedule.Event;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tour")
 public class Tour implements Serializable {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
     @Column(name = "id")
-    private Long id;
+    private UUID id;
 
     @Column(name = "date")
     private LocalDate date;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "tour_id", nullable = false)
-    private List<Schedule> schedules;
+    @JoinColumn(name = "tour_id")
+    private Set<Event> schedules;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tour_person",
+            joinColumns = {@JoinColumn(name = "tour_id")},
+            inverseJoinColumns = {@JoinColumn(name = "person_id")}
+    )
+    private Set<Person> people = new HashSet<>();
 
     public Tour() {
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -41,11 +57,33 @@ public class Tour implements Serializable {
         this.date = date;
     }
 
-    public List<Schedule> getSchedules() {
+    public Set<Event> getSchedules() {
         return schedules;
     }
 
-    public void setSchedules(List<Schedule> schedules) {
+    public void setSchedules(Set<Event> schedules) {
         this.schedules = schedules;
+    }
+
+    public Set<Person> getPeople() {
+        return people;
+    }
+
+    public void setPeople(Set<Person> people) {
+        this.people = people;
+    }
+
+    public boolean addPerson(Person person) {
+        if (people == null) {
+            people = new HashSet<>();
+        }
+        return people.add(person);
+    }
+
+    public boolean addEvent(Event event) {
+        if (schedules == null) {
+            schedules = new HashSet<Event>();
+        }
+        return schedules.add(event);
     }
 }

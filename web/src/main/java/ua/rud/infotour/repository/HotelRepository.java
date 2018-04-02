@@ -3,7 +3,9 @@ package ua.rud.infotour.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ua.rud.infotour.domain.Hotel;
 
-public interface HotelRepository extends JpaRepository<Hotel, Long> {
+import java.util.UUID;
 
-    Hotel getById(Long id);
+public interface HotelRepository extends JpaRepository<Hotel, UUID> {
+
+    Hotel getById(UUID id);
 }
