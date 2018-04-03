@@ -27,12 +27,6 @@ public class TourController {
         return new ResponseEntity<>(newTour, HttpStatus.OK);
     }
 
-    @PostMapping(value = "{tour_id}/add-hotel/{hotel_id}")
-    public ResponseEntity<Tour> addHotel(@PathVariable("tour_id") UUID tourId, @PathVariable("hotel_id") UUID hotelId) {
-        throw new UnsupportedOperationException();
-//        Tour tour = tourService.addHotel(tourId, hotelId);
-//        return new ResponseEntity<>(tour, HttpStatus.OK);
-    }
 
     @PostMapping(value = "{tour_id}/add-agent/{person_id}")
     public ResponseEntity<Tour> addPerson(@PathVariable("tour_id") UUID tourId, @PathVariable("person_id") UUID personId) {
@@ -56,6 +50,12 @@ public class TourController {
     public ResponseEntity<Tour> addEvent(@PathVariable("tour_id") UUID tourId, 
                                          @RequestBody NewEventDto eventDto) {
         Tour tour = tourService.addEvent(tourId, eventDto);
+        return new ResponseEntity<>(tour, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "{tour_id}/add-revision/{hotel_id}")
+    public ResponseEntity<Tour> addHotel(@PathVariable("tour_id") UUID tourId, @PathVariable("hotel_id") UUID hotelId) {
+        Tour tour = tourService.addRevision(tourId, hotelId);
         return new ResponseEntity<>(tour, HttpStatus.OK);
     }
 }

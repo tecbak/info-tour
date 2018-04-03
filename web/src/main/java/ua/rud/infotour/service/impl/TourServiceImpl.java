@@ -3,9 +3,11 @@ package ua.rud.infotour.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.rud.infotour.domain.Hotel;
 import ua.rud.infotour.domain.Person;
 import ua.rud.infotour.domain.Tour;
 import ua.rud.infotour.domain.schedule.Event;
+import ua.rud.infotour.domain.schedule.Revision;
 import ua.rud.infotour.dto.NewEventDto;
 import ua.rud.infotour.repository.PersonRepository;
 import ua.rud.infotour.repository.TourRepository;
@@ -41,10 +43,10 @@ public class TourServiceImpl implements TourService {
     }
 
     //    @Override
-//    public Tour addHotel(UUID tourId, UUID hotelId) {
+//    public Tour addRevision(UUID tourId, UUID hotelId) {
 //        Tour tour = tourRepository.getById(tourId);
 //        Hotel hotel = hotelService.getById(hotelId);
-//        tour.addHotel(hotel);
+//        tour.addRevision(hotel);
 //        return tourRepository.saveAndFlush(tour);
 //    }
 //
@@ -66,6 +68,15 @@ public class TourServiceImpl implements TourService {
         Tour tour = tourRepository.getById(tourId);
         Event event = new Event(eventDto);
         tour.addEvent(event);
+        return tourRepository.saveAndFlush(tour);
+    }
+
+    @Override
+    public Tour addRevision(UUID tourId, UUID hotelId) {
+        Tour tour = tourRepository.getById(tourId);
+        Hotel hotel = hotelService.getById(hotelId);
+        Revision revision = new Revision(hotel);
+        tour.addRevision(revision);
         return tourRepository.saveAndFlush(tour);
     }
 }

@@ -1,5 +1,6 @@
 package ua.rud.infotour.service;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import ua.rud.infotour.domain.Tour;
 import ua.rud.infotour.dto.NewEventDto;
 
@@ -11,11 +12,13 @@ public interface TourService {
 
     Tour getById(UUID tourId);
 
-//    Tour addHotel(Long tourId, Long hotelId);
+//    Tour addRevision(Long tourId, Long hotelId);
 
     List<Tour> getAll();
 
     Tour addPerson(UUID tourId, UUID personId);
 
     Tour addEvent(UUID tourId, NewEventDto eventDto);
+
+    Tour addRevision(UUID tourId, UUID hotelId);
 }

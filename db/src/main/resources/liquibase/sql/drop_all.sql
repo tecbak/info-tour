@@ -3,7 +3,7 @@ person,
 hotel,
 
 tour,
-hotel_revision,
+revision,
 questionnaire,
 
 draft_tour,

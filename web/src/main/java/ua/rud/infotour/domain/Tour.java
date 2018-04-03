@@ -2,6 +2,8 @@ package ua.rud.infotour.domain;
 
 import org.hibernate.annotations.GenericGenerator;
 import ua.rud.infotour.domain.schedule.Event;
+import ua.rud.infotour.domain.schedule.Revision;
+import ua.rud.infotour.domain.schedule.Schedule;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,9 +14,17 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "tour")
+@NamedEntityGraph(
+        name = "tourWithSchedulesAndPeople",
+        attributeNodes = {
+                @NamedAttributeNode("schedules"),
+                @NamedAttributeNode("people")
+        }
+)
 public class Tour implements Serializable {
 
     @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
             name = "UUID",
@@ -28,7 +38,7 @@ public class Tour implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "tour_id")
-    private Set<Event> schedules;
+    private Set<Schedule> schedules;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
@@ -57,11 +67,11 @@ public class Tour implements Serializable {
         this.date = date;
     }
 
-    public Set<Event> getSchedules() {
+    public Set<Schedule> getSchedules() {
         return schedules;
     }
 
-    public void setSchedules(Set<Event> schedules) {
+    public void setSchedules(Set<Schedule> schedules) {
         this.schedules = schedules;
     }
 
@@ -81,9 +91,17 @@ public class Tour implements Serializable {
     }
 
     public boolean addEvent(Event event) {
+        return addSchedule(event);
+    }
+
+    public boolean addRevision(Revision revision) {
+        return addSchedule(revision);
+    }
+
+    private boolean addSchedule(Schedule schedule) {
         if (schedules == null) {
-            schedules = new HashSet<Event>();
+            schedules = new HashSet<>();
         }
-        return schedules.add(event);
+        return schedules.add(schedule);
     }
 }

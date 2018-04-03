@@ -7,11 +7,12 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 //@MappedSuperclass
 public abstract class Schedule {
 
     @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
             name = "UUID",

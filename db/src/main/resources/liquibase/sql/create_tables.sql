@@ -1,13 +1,15 @@
+-- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TABLE person
 (
-  id   UUID
+  id   UUID --NOT NULL DEFAULT uuid_generate_v1()
     CONSTRAINT person_pkey PRIMARY KEY,
   name VARCHAR(255)
 );
 
 CREATE TABLE hotel
 (
-  id   UUID
+  id   UUID --NOT NULL DEFAULT uuid_generate_v1()
     CONSTRAINT hotel_pkey PRIMARY KEY,
   name VARCHAR(255)
 );
@@ -16,7 +18,7 @@ CREATE TABLE hotel
 
 CREATE TABLE tour
 (
-  id   UUID
+  id   UUID --NOT NULL DEFAULT uuid_generate_v1()
     CONSTRAINT tour_pkey PRIMARY KEY,
   date TIMESTAMP
 );
@@ -30,8 +32,17 @@ CREATE TABLE tour_person
   PRIMARY KEY (tour_id, person_id)
 );
 
+CREATE TABLE schedule (
+  id        UUID --NOT NULL DEFAULT uuid_generate_v1()
+    CONSTRAINT schedule_pkey PRIMARY KEY,
+  tour_id   UUID
+    CONSTRAINT schedule_tour_id_fk REFERENCES tour (id),
+  date_time TIMESTAMP
+);
+
+
 CREATE TABLE event (
-  id          UUID
+  id          UUID --NOT NULL DEFAULT uuid_generate_v1()
     CONSTRAINT event_pkey PRIMARY KEY,
   tour_id     UUID
     CONSTRAINT event_tour_id_fk REFERENCES tour (id),
@@ -40,23 +51,25 @@ CREATE TABLE event (
 );
 
 
-CREATE TABLE hotel_revision
+CREATE TABLE revision
 (
-  id        UUID
-    CONSTRAINT tour_info_pkey PRIMARY KEY,
+  id        UUID --NOT NULL DEFAULT uuid_generate_v1()
+    CONSTRAINT revision_pkey PRIMARY KEY,
   tour_id   UUID
-    CONSTRAINT hotel_revision_tour_id_fk REFERENCES tour (id),
+    CONSTRAINT revision_tour_id_fk REFERENCES tour (id),
+  hotel_id  UUID
+    CONSTRAINT revision_hotel_id_fk REFERENCES hotel (id),
   date_time TIMESTAMP
 
 );
 
 CREATE TABLE questionnaire
 (
-  id                UUID
+  id          UUID --NOT NULL DEFAULT uuid_generate_v1()
     CONSTRAINT questionnaire_pkey PRIMARY KEY,
-  hotel_revision_id UUID NOT NULL
-    CONSTRAINT questionnaire_hotel_revision_id_fk REFERENCES hotel_revision (id),
-  person_id         UUID NOT NULL
+  revision_id UUID NOT NULL
+    CONSTRAINT questionnaire_revision_id_fk REFERENCES revision (id),
+  person_id   UUID NOT NULL
     CONSTRAINT questionnaire_person_id_fk REFERENCES person (id),
-  notes             VARCHAR(255)
+  notes       VARCHAR(255)
 );

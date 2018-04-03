@@ -12,6 +12,7 @@ import java.util.UUID;
 public class Person implements Serializable {
 
     @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
             name = "UUID",

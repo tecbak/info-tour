@@ -12,17 +12,36 @@ import java.util.UUID;
 @Table(name = "event")
 public class Event extends Schedule{
 
-//    @Id
-//    @GeneratedValue(generator = "UUID")
+    /*@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+
 //    @GenericGenerator(
 //            name = "UUID",
 //            strategy = "org.hibernate.id.UUIDGenerator"
 //    )
-//    @Column(name = "id")
-//    private UUID id;
-//
-//    @Column(name = "date_time")
-//    private LocalDateTime dateTime;
+    @Column(name = "id")
+    private UUID id;
+
+    @Column(name = "date_time")
+    private LocalDateTime dateTime;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }*/
+    
+    
 
     @Column(name = "information")
     private String information;
