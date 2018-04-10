@@ -8,7 +8,6 @@ import ua.rud.infotour.domain.Person;
 import ua.rud.infotour.domain.Tour;
 import ua.rud.infotour.domain.schedule.Event;
 import ua.rud.infotour.domain.schedule.Revision;
-import ua.rud.infotour.dto.NewEventDto;
 import ua.rud.infotour.repository.PersonRepository;
 import ua.rud.infotour.repository.TourRepository;
 import ua.rud.infotour.service.HotelService;
@@ -64,9 +63,9 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public Tour addEvent(UUID tourId, NewEventDto eventDto) {
+    public Tour addEvent(UUID tourId, Event event) {
         Tour tour = tourRepository.getById(tourId);
-        Event event = new Event(eventDto);
+//        Event event = new Event(eventDto);
         tour.addEvent(event);
         return tourRepository.saveAndFlush(tour);
     }

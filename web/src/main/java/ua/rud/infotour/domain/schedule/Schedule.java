@@ -6,12 +6,12 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+//@Entity
+//@Inheritance(strategy = InheritanceType.JOINED)
 //@MappedSuperclass
-public abstract class Schedule {
+public interface Schedule {
 
-    @Id
+    /*@Id
 //    @GeneratedValue(strategy = GenerationType.AUTO)
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -38,5 +38,5 @@ public abstract class Schedule {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
-    }
+    }*/
 }

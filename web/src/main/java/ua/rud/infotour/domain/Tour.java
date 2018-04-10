@@ -3,7 +3,6 @@ package ua.rud.infotour.domain;
 import org.hibernate.annotations.GenericGenerator;
 import ua.rud.infotour.domain.schedule.Event;
 import ua.rud.infotour.domain.schedule.Revision;
-import ua.rud.infotour.domain.schedule.Schedule;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,14 +16,14 @@ import java.util.UUID;
 @NamedEntityGraph(
         name = "tourWithSchedulesAndPeople",
         attributeNodes = {
-                @NamedAttributeNode("schedules"),
+                @NamedAttributeNode("revisions"),
+                @NamedAttributeNode("events"),
                 @NamedAttributeNode("people")
         }
 )
 public class Tour implements Serializable {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
             name = "UUID",
@@ -38,7 +37,11 @@ public class Tour implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "tour_id")
-    private Set<Schedule> schedules;
+    private Set<Revision> revisions = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "tour_id")
+    private Set<Event> events = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
@@ -67,14 +70,6 @@ public class Tour implements Serializable {
         this.date = date;
     }
 
-    public Set<Schedule> getSchedules() {
-        return schedules;
-    }
-
-    public void setSchedules(Set<Schedule> schedules) {
-        this.schedules = schedules;
-    }
-
     public Set<Person> getPeople() {
         return people;
     }
@@ -83,25 +78,31 @@ public class Tour implements Serializable {
         this.people = people;
     }
 
+    public Set<Revision> getRevisions() {
+        return revisions;
+    }
+
+    public void setRevisions(Set<Revision> revisions) {
+        this.revisions = revisions;
+    }
+
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Set<Event> events) {
+        this.events = events;
+    }
+
     public boolean addPerson(Person person) {
-        if (people == null) {
-            people = new HashSet<>();
-        }
         return people.add(person);
     }
 
     public boolean addEvent(Event event) {
-        return addSchedule(event);
+        return events.add(event);
     }
 
     public boolean addRevision(Revision revision) {
-        return addSchedule(revision);
-    }
-
-    private boolean addSchedule(Schedule schedule) {
-        if (schedules == null) {
-            schedules = new HashSet<>();
-        }
-        return schedules.add(schedule);
+        return revisions.add(revision);
     }
 }

@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.rud.infotour.domain.Tour;
-import ua.rud.infotour.dto.NewEventDto;
+import ua.rud.infotour.domain.schedule.Event;
 import ua.rud.infotour.service.TourService;
 
 import java.util.List;
@@ -48,13 +48,14 @@ public class TourController {
 
     @PostMapping(value = "{tour_id}/add-event")
     public ResponseEntity<Tour> addEvent(@PathVariable("tour_id") UUID tourId, 
-                                         @RequestBody NewEventDto eventDto) {
-        Tour tour = tourService.addEvent(tourId, eventDto);
+                                         @RequestBody Event event) {
+        Tour tour = tourService.addEvent(tourId, event);
         return new ResponseEntity<>(tour, HttpStatus.OK);
     }
 
     @PostMapping(value = "{tour_id}/add-revision/{hotel_id}")
-    public ResponseEntity<Tour> addHotel(@PathVariable("tour_id") UUID tourId, @PathVariable("hotel_id") UUID hotelId) {
+    public ResponseEntity<Tour> addHotel(@PathVariable("tour_id") UUID tourId, 
+                                         @PathVariable("hotel_id") UUID hotelId) {
         Tour tour = tourService.addRevision(tourId, hotelId);
         return new ResponseEntity<>(tour, HttpStatus.OK);
     }

@@ -8,22 +8,23 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "event")
-public class Event extends Schedule{
+public class Event implements Schedule {
 
-    /*@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-
-//    @GenericGenerator(
-//            name = "UUID",
-//            strategy = "org.hibernate.id.UUIDGenerator"
-//    )
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
     @Column(name = "id")
     private UUID id;
 
     @Column(name = "date_time")
     private LocalDateTime dateTime;
+
+    public Event() {
+    }
 
     public UUID getId() {
         return id;
@@ -39,19 +40,13 @@ public class Event extends Schedule{
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
-    }*/
-    
-    
+    }
 
     @Column(name = "information")
     private String information;
 
-    public Event() {
-    }
-
     public Event(NewEventDto eventDto) {
-        String information = eventDto.getInformation();
-        this.information = information;
+        this.information = eventDto.getInformation();
     }
 
     public String getInformation() {
