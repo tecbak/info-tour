@@ -2,9 +2,10 @@
 
 CREATE TABLE person
 (
-  id   UUID --NOT NULL DEFAULT uuid_generate_v1()
+  id       UUID --NOT NULL DEFAULT uuid_generate_v1()
     CONSTRAINT person_pkey PRIMARY KEY,
-  name VARCHAR(255)
+  password VARCHAR(255) not null,
+  name     VARCHAR(255)
 );
 
 CREATE TABLE hotel

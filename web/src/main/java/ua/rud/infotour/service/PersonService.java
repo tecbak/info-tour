@@ -4,4 +4,6 @@ import ua.rud.infotour.domain.Person;
 
 public interface PersonService {
     Person addPerson(String name);
+
+    Person getByName(String name);
 }
